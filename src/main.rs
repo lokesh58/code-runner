@@ -1,13 +1,11 @@
-use actix_web::{get, App, HttpResponse, HttpServer, Responder};
+mod routes;
 
-#[get("/")]
-async fn hello() -> impl Responder {
-    HttpResponse::Ok().body("Hello world!")
-}
+use actix_web::{App, HttpServer};
+use routes::setup_routes;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(hello))
+    HttpServer::new(|| App::new().configure(setup_routes))
         .bind(("127.0.0.1", 8080))?
         .run()
         .await
