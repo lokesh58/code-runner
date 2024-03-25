@@ -9,7 +9,7 @@ async fn list_supported_languages() -> Result<impl Responder> {
 
 #[post("/run")]
 async fn run_code(params: web::Json<RunCodeParams>) -> Result<impl Responder> {
-    let result = utils::run_code(params.into_inner()).await;
+    let result = utils::run_code(params.into_inner()).await?;
     Ok(web::Json(result))
 }
 
