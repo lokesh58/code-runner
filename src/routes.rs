@@ -1,26 +1,16 @@
 use actix_web::{get, post, web, Responder, Result};
-use code_runner::models::{LanguageDetails, RunCodeParams, RunCodeResult};
+use code_runner::{models::RunCodeParams, utils};
 
 #[get("/list")]
 async fn list_supported_languages() -> Result<impl Responder> {
-    Ok(web::Json(vec![LanguageDetails {
-        language: String::from("dummy"),
-        display: String::from("Dummy Lang for test"),
-    }]))
+    let supported_languages = utils::get_all_languages();
+    Ok(web::Json(supported_languages))
 }
 
 #[post("/run")]
 async fn run_code(params: web::Json<RunCodeParams>) -> Result<impl Responder> {
-    println!(
-        "Received params:\nlanguage: {},\ncode: {},\ninput: {}",
-        params.language,
-        params.code,
-        params.input.clone().unwrap_or(String::from("<empty>"))
-    );
-    Ok(web::Json(RunCodeResult {
-        output: String::from("TODO: Run code to get actual output"),
-        error: String::from("TODO: Run code to get actual error"),
-    }))
+    let result = utils::run_code(params.into_inner()).await;
+    Ok(web::Json(result))
 }
 
 pub fn setup_routes(cfg: &mut web::ServiceConfig) {
