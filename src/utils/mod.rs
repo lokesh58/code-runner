@@ -46,7 +46,7 @@ static LANGUAGE_INFO_MAP: Map<&'static str, LanguageInfo> = phf_map! {
         display: "Python",
         code_filename: "main.py",
         compile_cmd: None,
-        execute_cmd: "python main.py",
+        execute_cmd: "python3 main.py",
     },
     "rs" => LanguageInfo {
         display: "Rust",
