@@ -1,3 +1,4 @@
+use crate::middleware::auth::auth_middleware;
 use actix_web::{get, post, web, Responder, Result};
 use code_runner::{models::RunCodeParams, utils};
 
@@ -7,7 +8,7 @@ async fn list_supported_languages() -> Result<impl Responder> {
     Ok(web::Json(supported_languages))
 }
 
-#[post("/run")]
+#[post("/run", wrap = "auth_middleware()")]
 async fn run_code(params: web::Json<RunCodeParams>) -> Result<impl Responder> {
     let result = utils::run_code(params.into_inner()).await?;
     Ok(web::Json(result))
