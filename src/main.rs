@@ -1,3 +1,4 @@
+mod middleware;
 mod routes;
 
 use actix_web::{middleware::Logger, App, HttpServer};
