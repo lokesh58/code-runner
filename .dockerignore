@@ -1,3 +1,7 @@
-/target
-Dockerfile
-compose.yaml
+.git
+.vscode
+target
+.env
+.gitignore
+LICENSE
+README.md
