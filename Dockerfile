@@ -1,7 +1,7 @@
-FROM ubuntu:22.04 AS env
+FROM ubuntu:24.04 AS env
 
 RUN apt-get update
-RUN apt-get install -y gcc g++ python3 curl
+RUN apt-get install -y gcc g++ python3 curl git ca-certificates
 
 RUN useradd -ms /bin/bash coderunner
 USER coderunner
@@ -20,7 +20,7 @@ RUN npm install -g ts-node
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
 ENV PATH="/home/coderunner/.cargo/bin:${PATH}"
 
-FROM rust:1.77 AS builder
+FROM rust:1.84 AS builder
 WORKDIR /app
 COPY . .
 RUN cargo install --path .
